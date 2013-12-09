@@ -1,6 +1,6 @@
 module Oauth
   class AuthorizationsController < ApplicationController
-    before_filter :authenticate_user!, except: [:token]
+    before_filter :authenticate_user!, except: [:token] # Token only needs to authenticate the client (?)
 
     # Ask `current_user` for permission to access their account
     #
@@ -18,11 +18,11 @@ module Oauth
       begin
         # Get the authorization code
         res = Oauth::Request::AuthorizationCode.for(current_user, params).get_authorization_code
+
+        redirect_to res.to_uri
       rescue Oauth::Error => e
         redirect_to([params.redirect_uri, e.to_param].join('?'))
       end
-
-      redirect_to res.to_uri
     end
 
     # Returns the access token for this authorization
@@ -41,7 +41,7 @@ module Oauth
       rescue Oauth::Error::UnauthorizedClient => e
         redirect_to [request.referer, e.to_param].join('?')
       rescue Oauth::Error::InvalidGrant => e
-        redirect_to [request.referer, e.to_param].join('?')
+        redirect_to [client.redirect_uri, e.to_param].join('?')
       end
     end
 

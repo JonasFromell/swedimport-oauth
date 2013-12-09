@@ -21,11 +21,7 @@ module Oauth
       #
       # @return [Response]
       def get_authorization_code
-        begin
-          auth = user.authorizations.create(application_id: application_id, redirect_uri: redirect_uri)
-        rescue NameError
-          raise Oauth::Error::AccessDenied
-        end
+        raise Oauth::Error::AccessDenied unless auth = user.authorizations.create(application_id: application_id, redirect_uri: redirect_uri)
 
         Oauth::Response::AuthorizationCode.new(auth.to_param)
       end
