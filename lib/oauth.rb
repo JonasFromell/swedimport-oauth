@@ -9,5 +9,7 @@ require "oauth/response"
 
 require "oauth/error"
 
+require "oauth/http/uri"
+
 module Oauth
 end
