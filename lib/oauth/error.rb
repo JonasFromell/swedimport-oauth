@@ -1,5 +1,7 @@
 module Oauth
   module Error
+    # Abstract class for handling errors
+    #
     class Base < StandardError
       attr_reader :code, :description
 
@@ -15,6 +17,10 @@ module Oauth
       end
     end
 
+    # Specific error classes
+    #
+    #
+    
     class AccessDenied < Base
       def self.to_hash
         new("access_denied", "The authorization server or resource owner denied the request.").to_hash

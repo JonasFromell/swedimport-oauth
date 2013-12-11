@@ -2,10 +2,16 @@ module Oauth
   class AuthorizationsController < ApplicationController
     before_filter :authenticate_user!, only: [:new]
 
+    # Authorize endpoint for `response_type=code`
+    #
+    # @param params[:application_id]
+    # @param params[:redirect_uri]
     def new
       
     end
 
+    # @param params[:application_id]
+    # @param params[:redirect_uri]
     def create
       @request = Request.new(params)
 
@@ -18,6 +24,11 @@ module Oauth
       end
     end
 
+    # Token endpoint for `grant_type=authorization_code`
+    #
+    # @param params[:application_id]
+    # @param params[:redirect_uri]
+    # @param params[:code]
     def token
       @request = Request.new(params)
 
