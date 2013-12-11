@@ -4,11 +4,8 @@ module Oauth
 
     belongs_to :user, class_name: "Oauth::User"
 
-    def to_param
-      {
-        code: code,
-        redirect_uri: redirect_uri
-      }
+    def to_query
+      {code: code}.to_param
     end
 
     def client

@@ -4,7 +4,7 @@ module Oauth
 
     class << self
       def authenticate(application_id, application_secret)
-        find_by(application_id: application_id, application_secret: application_secret)
+        where("application_id = ? AND set_application_secret = ?", application_id, application_secret)
       end
     end
 
