@@ -8,6 +8,13 @@ module Oauth
         def parse(uri)
           new(Uri::REGEX.match(uri))
         end
+
+        def build(*args)
+          params = args.extract_options!
+          base   = args[0]
+
+          return [base, params.to_param].join('?')
+        end
       end
 
       attr_reader :scheme, :host, :path, :query, :fragment

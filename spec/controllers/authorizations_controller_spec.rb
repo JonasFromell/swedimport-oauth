@@ -30,7 +30,7 @@ describe Oauth::AuthorizationsController do
       it "redirects with error `access_denied` in the query component of `redirect_uri`" do
         post :create, application_id: client.application_id, redirect_uri: client.redirect_uri, response_type: "code"
 
-        expect(response).to redirect_to([client.redirect_uri, {error: "access_denied", error_description: "The authorization server denied the request."}.to_param].join('?'))
+        expect(response).to redirect_to([client.redirect_uri, {error: "access_denied", error_description: "The authorization server or resource owner denied the request."}.to_param].join('?'))
       end
     end
 

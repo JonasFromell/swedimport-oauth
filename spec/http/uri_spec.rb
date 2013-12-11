@@ -26,6 +26,16 @@ describe Oauth::Http::Uri, "class method #parse" do
   end
 end
 
+describe Oauth::Http::Uri, "class method #build" do
+  let(:uri) { Oauth::Http::Uri.build("http://example.com", { code: "somerandomstring", state: "someotherrandomstring" }) }
+
+  context "given a string and a hash" do
+    it "should convert the hash to a query and add it to the string" do
+      expect(uri).to eq("http://example.com?code=somerandomstring&state=someotherrandomstring")
+    end
+  end
+end
+
 describe Oauth::Http::Uri, "instance method #params" do
   let(:uri) { Oauth::Http::Uri.parse("http://example.com/index.html?code=somerandomstring&state=someotherrandomstring") }
 

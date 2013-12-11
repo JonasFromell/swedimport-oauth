@@ -7,24 +7,26 @@ module Oauth
     end
 
     def create
-      if user_signed_in?
-        @request = Request.new(params).authorization_code
-        response = @request.get_code(current_user)
+      @request = Request.new(params)
 
-        redirect_to response.to_param
+      if user_signed_in?
+        response = @request.authorization_code.get_code(current_user)
+
+        redirect_to Http::Uri.build(@request.redirect_uri, response.options)
       else
-        redirect_to [params[:redirect_uri], Oauth::Error.new("access_denied", "The authorization server denied the request.").to_query].join('?')
+        redirect_to Http::Uri.build(@request.redirect_uri, Oauth::Error::AccessDenied.to_hash)
       end
     end
 
     def token
-      if authenticate_client!
-        @request = Request.new(params).authorization_code
-        response = @request.get_access_token
+      @request = Request.new(params)
 
-        redirect_to response.to_param
+      if authenticate_client!
+        response = @request.authorization_code.get_access_token
+
+        redirect_to Http::Uri.build(@request.redirect_uri, response.options)
       else
-        redirect_to [request.referer, Oauth::Error.new("unauthorized_client", "The client is not authorized to make this request.").to_query].join('?')
+        redirect_to Http::Uri.build(@request.redirect_uri, Oauth::Error::UnauthorizedClient.to_hash)
       end
     end
 
