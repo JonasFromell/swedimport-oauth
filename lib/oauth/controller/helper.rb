@@ -1,6 +1,6 @@
 module Oauth
-  module Controllers
-    module Helpers
+  module Controller
+    module Helper
       extend ActiveSupport::Concern
       
     end
