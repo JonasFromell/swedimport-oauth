@@ -3,9 +3,6 @@ Oauth::Engine.routes.draw do
   devise_for :users, {
     class_name: "Oauth::User", module: :devise
   }
-
-  # Users
-  get "me", to: "users#show"
   
   # AuthorizationCode flow
   get  "authorize", to: "authorizations#new",     constraints: lambda { |req| req.query_parameters["response_type"] == "code" }
