@@ -10,6 +10,7 @@ module Oauth
 
   module Strategy
     autoload :AuthorizationCode, 'oauth/strategy/authorization_code'
+    autoload :ClientCredentials, 'oauth/strategy/client_credentials'
   end
 
   module Error
@@ -36,8 +37,8 @@ module Oauth
   @@resource_owner_class_name = "User"
 
   # The strategy to use to authenticate the resource owner, defaults to Devise
-  mattr_accessor :authentication_strategy
-  @@authentication_strategy = "Devise"
+  mattr_accessor :resource_owner_authentication_strategy
+  @@resource_owner_authentication_strategy = "Devise"
 
   # The default way to setup Oauth
   def self.setup
@@ -53,22 +54,22 @@ module Oauth
 
   # Proxy for the authentication strategy `sign_in` method
   def self.sign_in(controller, current_resource_owner)
-    klass = Oauth::Authenticator.const_get("#{@@authentication_strategy.constantize}")
+    klass = Oauth::Authenticator.const_get("#{@@resource_owner_authentication_strategy.constantize}")
     klass.new(controller).sign_in(current_resource_owner)
   end
 
   def self.sign_out(controller, current_resource_owner)
-    klass = Oauth::Authenticator.const_get("#{@@authentication_strategy.constantize}")
+    klass = Oauth::Authenticator.const_get("#{@@resource_owner_authentication_strategy.constantize}")
     klass.new(controller).sign_out(current_resource_owner)
   end
 
   def self.current_resource_owner(controller)
-    klass = Oauth::Authenticator.const_get("#{@@authentication_strategy.constantize}")
+    klass = Oauth::Authenticator.const_get("#{@@resource_owner_authentication_strategy.constantize}")
     klass.new(controller).current_resource_owner
   end
 
   def self.authenticate_resource_owner!(controller)
-    klass = Oauth::Authenticator.const_get("#{@@authentication_strategy.constantize}")
+    klass = Oauth::Authenticator.const_get("#{@@resource_owner_authentication_strategy.constantize}")
     klass.new(controller).authenticate_resource_owner!
   end
 end

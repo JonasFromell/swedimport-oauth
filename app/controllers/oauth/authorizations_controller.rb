@@ -51,11 +51,5 @@ module Oauth
         end
       end
     end
-
-    protected
-
-    def authenticate_client!
-      authenticate_with_http_basic { |u, p| Client.authenticate(u, p) }
-    end
   end
 end
