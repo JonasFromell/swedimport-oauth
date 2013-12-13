@@ -1,6 +1,7 @@
 module Oauth
   class AuthorizationsController < ApplicationController
     before_filter :authenticate_resource_owner!, only: [:new]
+    after_filter :set_headers, only: [:create, :token]
     # Authorize endpoint for `response_type=code`
     #
     # @param params[:application_id]

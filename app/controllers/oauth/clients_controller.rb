@@ -1,5 +1,6 @@
 module Oauth
   class ClientsController < ApplicationController
+    after_filter :set_headers, only: [:token]
     # Token endpoint for `grant_type=client_credentials`
     #
     # @param params grant_type
