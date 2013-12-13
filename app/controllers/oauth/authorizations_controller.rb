@@ -1,22 +1,21 @@
 module Oauth
   class AuthorizationsController < ApplicationController
-    before_filter :authenticate_user!, only: [:new]
-
+    before_filter :authenticate_resource_owner!, only: [:new]
     # Authorize endpoint for `response_type=code`
     #
     # @param params[:application_id]
     # @param params[:redirect_uri]
     def new
-      
+
     end
 
     # @param params[:application_id]
     # @param params[:redirect_uri]
     def create
       @request = Request.new(params)
-
-      if user_signed_in?
-        response = @request.authorization_code.get_code(current_user)
+      
+      if current_resource_owner
+        response = @request.authorization_code.get_code(current_resource_owner)
 
         redirect_to Http::Uri.build(@request.redirect_uri, response.options)
       else

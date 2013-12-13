@@ -2,7 +2,7 @@ module Oauth
   class Authorization < ActiveRecord::Base
     before_validation :set_code, :set_expires_at
 
-    belongs_to :user, class_name: "Oauth::User"
+    belongs_to :user, class_name: Oauth.resource_owner_class_name
 
     def to_query
       {code: code}.to_param

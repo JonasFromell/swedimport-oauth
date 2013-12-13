@@ -4,33 +4,17 @@ describe Oauth::AuthorizationsController do
   routes { Oauth::Engine.routes }
 
   describe "GET #new" do
-    context "when user is not authenticated" do
-      it "redirects to `SessionsController#new`" do
-        get :new
 
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-
-    context "when user is authenticated" do
-      login_user
-
-      it "renders the access granting form" do
-        get :new
-
-        expect(response).to render_template :new
-      end
-    end
   end
 
   describe "POST #create" do
     let(:client) { Fabricate(:client) }
 
     context "when user is not authenticated" do
-      it "redirects with error `access_denied` in the query component of `redirect_uri`" do
-        post :create, application_id: client.application_id, redirect_uri: client.redirect_uri, response_type: "code"
+      it "redirects to referer application" do
+        get :create, application_id: client.application_id, redirect_uri: client.redirect_uri, response_type: "code"
 
-        expect(response).to redirect_to([client.redirect_uri, {error: "access_denied", error_description: "The authorization server or resource owner denied the request."}.to_param].join('?'))
+        expect(response).to redirect_to([client.redirect_uri, {error_description: "The authorization server or resource owner denied the request.", error: "access_denied"}.to_param].join('?'))
       end
     end
 
@@ -69,7 +53,7 @@ describe Oauth::AuthorizationsController do
       it "redirects with `access_token` in the query component of `redirect_uri`" do
         post :token, code: auth.code, application_id: client.application_id, redirect_uri: client.redirect_uri
 
-        expect(response).to redirect_to([client.redirect_uri, Oauth::Token.first().to_query].join('?') + '&token_type=bearer') # Why is this whining about missing arguments??
+        expect(response).to redirect_to([client.redirect_uri, Oauth::Token.first().to_query].join('?') + '&token_type=bearer')
       end
     end
   end
