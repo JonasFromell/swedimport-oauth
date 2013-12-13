@@ -1,7 +1,5 @@
 module Oauth
   class ApplicationController < ActionController::Base
-    private
-
     def authenticate_resource_owner!
       Oauth.authenticate_resource_owner!(self)
     end

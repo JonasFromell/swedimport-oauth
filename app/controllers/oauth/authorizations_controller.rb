@@ -6,7 +6,7 @@ module Oauth
     # @param params[:application_id]
     # @param params[:redirect_uri]
     def new
-
+      
     end
 
     # @param params[:application_id]
