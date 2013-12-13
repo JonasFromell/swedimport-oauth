@@ -7,8 +7,12 @@ module Oauth
       @options = options
     end
 
-    def to_param
-      [request.redirect_uri, options.to_param].join('?')
+    def to_json
+      @options.to_json
+    end
+
+    def to_hash
+      @options
     end
   end
 end

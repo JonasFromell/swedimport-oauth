@@ -13,6 +13,10 @@ module Oauth
       def to_hash
         {error: code, error_description: description}
       end
+
+      def to_json
+        {error: code, error_description: description}.to_json
+      end
     end
   end
 end

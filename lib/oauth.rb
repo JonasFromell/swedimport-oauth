@@ -16,6 +16,7 @@ module Oauth
     autoload :OauthError, 'oauth/error/oauth_error'
     autoload :AccessDenied, 'oauth/error/access_denied'
     autoload :UnauthorizedClient, 'oauth/error/unauthorized_client'
+    autoload :Unauthorized, 'oauth/error/unauthorized'
   end
 
   module Http

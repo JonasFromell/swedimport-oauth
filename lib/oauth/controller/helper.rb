@@ -8,13 +8,20 @@ module Oauth
       end
 
       def require_access_token
-        token.valid?
+        if token && token.valid?
+          true
+        else
+          respond_to do |format|
+            format.html { head :unauthorized }
+            format.json { render json: Oauth::Error::Unauthorized.to_json, status: 401 }
+          end
+        end
       end
 
       private
 
       def token
-        Oauth::Token.find_by(access_token: params[:access_token])
+        Oauth::Token.find_by(token: params[:access_token])
       end
     end
   end

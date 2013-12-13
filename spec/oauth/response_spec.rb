@@ -1,13 +1,15 @@
 require "spec_helper"
 
 describe Oauth::Response, "instance method" do
-  let(:req) { Oauth::Request.new({redirect_uri: "http://example.com"}) }
+  context "#to_hash" do
+    it "returns the response as a hash" do
+      expect(described_class.new(nil, {key: "value"}).to_hash).to eq({key: "value"})
+    end
+  end
 
-  context "#to_param" do
-    it "constructs a valid URI from the request and options" do
-      res = Oauth::Response.new(req, {key: "value"})
-
-      expect(res.to_param).to eq("http://example.com?key=value")
+  context "#to_json" do
+    it "returns the response as json" do
+      expect(described_class.new(nil, {key: "value"}).to_json).to eq({key: "value"}.to_json)
     end
   end
 end

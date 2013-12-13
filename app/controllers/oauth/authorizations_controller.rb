@@ -6,7 +6,7 @@ module Oauth
     # @param params[:application_id]
     # @param params[:redirect_uri]
     def new
-      
+      # Nothing to see here, atm
     end
 
     # @param params[:application_id]
@@ -17,9 +17,15 @@ module Oauth
       if current_resource_owner
         response = @request.authorization_code.get_code(current_resource_owner)
 
-        redirect_to Http::Uri.build(@request.redirect_uri, response.options)
+        respond_to do |format|
+          format.html { redirect_to Http::Uri.build(@request.redirect_uri, response.to_hash) }
+          format.json { render json: response.to_json, location: @request.redirect_uri }
+        end
       else
-        redirect_to Http::Uri.build(@request.redirect_uri, Oauth::Error::AccessDenied.to_hash)
+        respond_to do |format|
+          format.html { redirect_to Http::Uri.build(@request.redirect_uri, Oauth::Error::AccessDenied.to_hash) }
+          format.json { render json: Oauth::Error::AccessDenied.to_json, location: @request.redirect_uri }
+        end
       end
     end
 
@@ -34,9 +40,15 @@ module Oauth
       if authenticate_client!
         response = @request.authorization_code.get_access_token
 
-        redirect_to Http::Uri.build(@request.redirect_uri, response.options)
+        respond_to do |format|
+          format.html { redirect_to Http::Uri.build(@request.redirect_uri, response.to_hash) }
+          format.json { render json: response.to_json, location: @request.redirect_uri }
+        end
       else
-        redirect_to Http::Uri.build(@request.redirect_uri, Oauth::Error::UnauthorizedClient.to_hash)
+        respond_to do |format|
+          format.html { redirect_to Http::Uri.build(@request.redirect_uri, Oauth::Error::UnauthorizedClient.to_hash) }
+          format.json { render json: Oauth::Error::UnauthorizedClient.to_json, location: @request.redirect_uri }
+        end
       end
     end
 

@@ -9,10 +9,6 @@ describe Oauth::Strategy::AuthorizationCode, "instance method" do
     it "returns a `Oauth::Response` object" do
       expect(res).to be_a(Oauth::Response)
     end
-
-    it "sets the correct parameters on the `Oauth::Response` object" do
-      expect(res.to_param).to eq("http://example.com?code=#{res.options[:code]}")
-    end
   end
 
   context "#get_access_token" do
@@ -22,10 +18,6 @@ describe Oauth::Strategy::AuthorizationCode, "instance method" do
 
     it "returns a `Oauth::Response` object" do
       expect(res).to be_a(Oauth::Response)
-    end
-
-    it "sets the correct parameters on the `Oauth::Response` object" do
-      expect(res.to_param).to eq("http://example.com?access_token=#{res.options[:access_token]}&expires_in=#{res.options[:expires_in]}&refresh_token=#{res.options[:refresh_token]}&token_type=#{res.options[:token_type]}")
     end
   end
 end

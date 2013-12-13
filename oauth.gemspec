@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "fabrication"
 
   s.add_development_dependency "devise"
-  s.add_development_dependency "oauth2"
 
   s.test_files = Dir["spec/**/*"]
 end

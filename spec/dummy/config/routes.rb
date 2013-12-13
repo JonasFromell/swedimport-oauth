@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   mount Oauth::Engine => "/oauth"
 
   get "callback", to: "oauth#callback"
+  get "protected", to: "oauth#new"
 end
