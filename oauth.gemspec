@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Oauth::VERSION
   s.authors     = ["Jonas Fromell"]
   s.email       = ["jonas.per.fromell@gmail.com"]
-  s.homepage    = "http://github.com/JonasFromell/swedimport/oauth"
+  s.homepage    = "http://github.com/JonasFromell/swedimport-oauth"
   s.summary     = "OAuth provider engine."
   s.description = "OAuth provider engine."
 
