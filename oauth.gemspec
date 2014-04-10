@@ -5,7 +5,7 @@ require "oauth/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "oauth"
+  s.name        = "swedimport-oauth"
   s.version     = Oauth::VERSION
   s.authors     = ["Jonas Fromell"]
   s.email       = ["jonas.per.fromell@gmail.com"]
