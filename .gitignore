@@ -1,3 +1,4 @@
+*/**.DS_STORE
 .bundle/
 log/*.log
 pkg/

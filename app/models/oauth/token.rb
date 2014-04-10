@@ -4,6 +4,8 @@ module Oauth
 
     belongs_to :client, class_name: "Oauth::Client"
 
+    validate :not_expired
+
     # Set the client relationship through application_id
     #
     def application_id=(application_id)
@@ -27,11 +29,15 @@ module Oauth
     end
 
     def set_refresh_token
-      self.token ||= SecureRandom.urlsafe_base64(16)
+      self.refresh_token ||= SecureRandom.urlsafe_base64(16)
     end
 
     def set_expires_at
       self.expires_at ||= 1.hour.from_now
+    end
+
+    def not_expired
+      self.expires_at > Time.now
     end
   end
 end

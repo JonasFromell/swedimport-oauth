@@ -5,5 +5,6 @@ class OauthController < ApplicationController
   end
   
   def callback
+    
   end
 end

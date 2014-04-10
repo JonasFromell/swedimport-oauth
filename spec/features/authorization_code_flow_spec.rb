@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Authorization code flow" do
   let(:client) { Fabricate(:client, redirect_uri: callback_path) }
-  let(:user) { Fabricate(:user) }
+  let(:user)   { Fabricate(:user) }
 
   context "#authorize endpoint" do
     it "displays a sign in form if not already signed in" do
@@ -21,6 +21,7 @@ describe "Authorization code flow" do
 
       click_button "Sign in"
 
+      # Here we'll choose to grant access or not
       expect(page).to have_content "Grant access?"
     end
   end
