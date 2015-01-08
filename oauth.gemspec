@@ -13,9 +13,11 @@ Gem::Specification.new do |s|
   s.summary     = "OAuth provider engine."
   s.description = "OAuth provider engine."
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = Dir["spec/**/*"]
+  s.require_paths = ["lib"]
 
-  s.add_dependency "rails", "~> 4.2.0"
+  s.add_dependency "rails", ">= 4.0.1"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails"
@@ -23,6 +25,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "fabrication"
   s.add_development_dependency "devise"
-
-  s.test_files = Dir["spec/**/*"]
 end
